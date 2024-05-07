@@ -1,0 +1,27 @@
+version: '3.3'
+services:
+  mariadb:
+    env_file: ../.env
+    container_name: mariadb
+    networks:
+      - inception
+    build:
+      context: requirements/mariadb
+      dockerfile: Dockerfile
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: unless-stopped
+    expose:
+      - "3306"
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/larmenou/Documents/inception/srcs/mariadb'
+
+networks:
+  inception:
+    driver: bridge
