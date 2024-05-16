@@ -1,58 +1,55 @@
 version: '3.3'
 services:
   nginx:
-    build: requirements/nginx/.
+    env_file: .env
+    build: requirements/nginx
     container_name: nginx
     depends_on:
       - wordpress
-      - mariadb
     ports:
-      - "80:80"
+      - "443:443"
     volumes:
       - "./web:/var/www/html"
+    restart: on-failure
     networks:
-      inception:
+      - inception
   wordpress:
-    build: requirements/wordpress/.
+    env_file: .env
+    build: requirements/wordpress
     container_name: wordpress
     depends_on:
       - mariadb
     volumes:
       - "./web:/var/www/html"
+    restart: on-failure
     networks:
-      inception:
+      - inception
   mariadb:
+    env_file: .env
     build: requirements/mariadb
     container_name: mariadb
     volumes:
       - "./database:/var/lib/mysql"
+    restart: unless-stopped
     networks:
-      inception:
+      - inception
 
 networks:
   inception:
-#   mariadb:
-#     env_file: ../.env
-#     container_name: mariadb
-#     networks:
-#       - inception
-#     build:
-#       context: requirements/mariadb
-#       dockerfile: Dockerfile
-#     volumes:
-#       - mariadb:/var/lib/mysql
-#     restart: unless-stopped
-#     expose:
-#       - "3306"
+    driver: bridge
 
-# volumes:
-#   mariadb:
-#     driver: local
-#     driver_opts:
-#       type: 'none'
-#       o: 'bind'
-#       device: '/home/larmenou/Documents/inception/srcs/mariadb'
-
-# networks:
-#   inception:
-#     driver: bridge
+volumes:
+  vol_mariadb:
+    external: false
+    driver: local
+    driver_opts:
+      type: 'ext4'
+      o: 'bind,rw'
+      device: '/home/larmenou/Documents/srcs/vol_mariadb'
+  vol_wordpress:
+    external: false
+    driver: local
+    driver_opts:
+      type: 'ext4'
+      o: 'bind,rw'
+      device: '/home/larmenou/Documents/srcs/vol_wordpress'
