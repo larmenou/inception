@@ -14,4 +14,6 @@ RUN  mkdir -p /var/run/mysqld \
 
 EXPOSE 3306
 
-CMD [ "sh", "./script.sh" ]
+ENTRYPOINT [ "sh", "./script.sh" ]
+
+# CMD [ "/etc/init.d/mariadb", "start" ]

@@ -46,11 +46,11 @@ volumes:
     driver_opts:
       type: ext4
       o: bind,rw
-      device: /home/larmenou/Documents/inception/vol_mariadb
+      device: /home/larmenou/data/vol_mariadb
   vol_wordpress:
     external: false
     driver: local
     driver_opts:
       type: ext4
       o: bind,rw
-      device: /home/larmenou/Documents/inception/vol_wordpress
+      device: /home/larmenou/data/vol_wordpress

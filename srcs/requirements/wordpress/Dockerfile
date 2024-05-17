@@ -17,3 +17,5 @@ RUN chmod +x script.sh
 EXPOSE 9000
 
 ENTRYPOINT [ "sh", "./script.sh" ]
+
+# CMD ["php-fpm7.4", "-F"]

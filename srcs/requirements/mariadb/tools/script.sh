@@ -8,3 +8,8 @@ mysql -h localhost -u root -p${SQL_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON \`
 killall mariadbd
 sleep 3
 /etc/init.d/mariadb start
+
+while true
+do
+    sleep 1
+done
