@@ -1,6 +1,7 @@
-version: '3.3'
+#version: '3.3'
 services:
   mariadb:
+    image: mariadb
     env_file: .env
     build: requirements/mariadb
     container_name: mariadb
@@ -10,6 +11,7 @@ services:
     networks:
       - inception
   wordpress:
+    image: wordpress
     env_file: .env
     build: requirements/wordpress
     container_name: wordpress
@@ -21,14 +23,14 @@ services:
     networks:
       - inception
   nginx:
+    image: nginx
     env_file: .env
     build: requirements/nginx
     container_name: nginx
-    depends_on:
-      - wordpress
-      - mariadb
     ports:
       - 443:443
+    depends_on:
+      - wordpress
     volumes:
       - vol_wordpress:/var/www/html
     restart: on-failure
@@ -44,13 +46,13 @@ volumes:
     external: false
     driver: local
     driver_opts:
-      type: ext4
-      o: bind,rw
+      type: none
+      o: bind
       device: /home/larmenou/data/vol_mariadb
   vol_wordpress:
     external: false
     driver: local
     driver_opts:
-      type: ext4
-      o: bind,rw
+      type: none
+      o: bind
       device: /home/larmenou/data/vol_wordpress
