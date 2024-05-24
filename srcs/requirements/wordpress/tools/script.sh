@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Attendre que la base de données soit prête
-sleep 10
+sleep 5
 
 cd /var/www/html
 
