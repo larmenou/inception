@@ -1,19 +1,19 @@
 #version: '3.3'
 services:
   mariadb:
-    image: mariadb
     env_file: .env
     build: requirements/mariadb
+    image: mariadb
     container_name: mariadb
     volumes:
       - vol_mariadb:/var/lib/mysql
-    restart: unless-stopped
+    restart: on-failure
     networks:
       - inception
   wordpress:
-    image: wordpress
     env_file: .env
     build: requirements/wordpress
+    image: wordpress
     container_name: wordpress
     depends_on:
       - mariadb
@@ -23,9 +23,9 @@ services:
     networks:
       - inception
   nginx:
-    image: nginx
     env_file: .env
     build: requirements/nginx
+    image: nginx
     container_name: nginx
     ports:
       - 443:443
